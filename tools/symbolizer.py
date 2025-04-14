@@ -13,7 +13,7 @@ import subprocess
 
 # Matches the timestamp or a thread/cpu number prefix of a log line.
 BRACKET_PREFIX_RE = re.compile(
-    '^(?P<time>\[ *[TC0-9\.]+\]) ?(?P<body>.*)$'
+    r'^(?P<time>\[ *[TC0-9\.]+\]) ?(?P<body>.*)$'
 )
 
 # A decimal number.
@@ -24,7 +24,7 @@ HEXNUM_RE = '[0-9A-Fa-f]+'
 
 # An address in the form [<ffffffff12345678>].
 FRAME_ADDR_RE = (
-    '((\[\<(?P<addr>' + HEXNUM_RE + ')\>\]) )'
+    r'((\[\<(?P<addr>' + HEXNUM_RE + r')\>\]) )'
 )
 
 # A function name with an offset and function size, plus an optional module
@@ -32,13 +32,13 @@ FRAME_ADDR_RE = (
 # __asan_load8+0x64/0x66
 FRAME_BODY_RE = (
     '(?P<body>' +
-        '(?P<function>[^\+]+)' +
-        '\+' +
+        r'(?P<function>[^\+]+)' +
+        r'\+' +
         '0x(?P<offset>' + HEXNUM_RE + ')' +
         '/' +
         '0x(?P<size>' + HEXNUM_RE + ')' +
     ')' +
-    '( \[(?P<module>.+)\])?'
+    r'( \[(?P<module>.+)\])?'
 )
 
 # Matches a single stacktrace frame (without time or thread/cpu number prefix).
@@ -46,7 +46,7 @@ FRAME_RE = re.compile(
     '^' +
     '(?P<prefix> *)' +
     FRAME_ADDR_RE + '?' +
-    '((?P<precise>\?) )?' +
+    r'((?P<precise>\?) )?' +
     FRAME_BODY_RE +
     '$'
 )
