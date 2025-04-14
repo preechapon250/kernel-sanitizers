@@ -346,14 +346,14 @@ class ReportProcessor(object):
             return
         linenum -= 1 # addr2line reports line numbers starting with 1
 
-        start = max(0, linenum - context_size / 2)
+        start = max(0, linenum - context_size // 2)
         end = start + context_size
         lines = self.load_file(filename)
         if not lines:
             return
 
         for i, line in enumerate(lines[start:end]):
-            print('    {0:5d} {1}'.format(i + start + 1, line), end=' ')
+            print('    {0:5d} {1}'.format(i + start + 1, line), end='')
 
     def finalize(self):
         for module, symbolizer in self.module_symbolizers.items():
